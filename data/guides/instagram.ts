@@ -13,6 +13,7 @@ export const instagram: Guide = {
   slug: "instagram",
   name: "Instagram (Meta)",
   website: "https://www.instagram.com",
+  domain: "instagram.com",
   category: "Social",
   consoleUrl: "https://developers.facebook.com/apps",
   origin: "library",
@@ -34,6 +35,7 @@ export const instagram: Guide = {
       timeToFirstToken: "About 1 hour",
       timeToProduction: "Same day (role users only)",
       gate: "None. Standard Access only works for users with a role on the app.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: ACCESS },
     },
     {
@@ -45,6 +47,7 @@ export const instagram: Guide = {
       timeToFirstToken: "About 1 hour (your own account)",
       timeToProduction: "1-6 weeks with clean documents; months if verification stalls",
       gate: "Business Verification, then App Review per permission, then Live mode",
+      launchDays: 30,
       evidence: {
         kind: "sourced",
         url: SUBMIT,

@@ -11,6 +11,7 @@ export const notion: Guide = {
   slug: "notion",
   name: "Notion",
   website: "https://www.notion.so",
+  domain: "notion.so",
   category: "Docs and knowledge",
   consoleUrl: "https://app.notion.com/developers/connections",
   origin: "library",
@@ -32,6 +33,7 @@ export const notion: Guide = {
       timeToFirstToken: "10-15 minutes",
       timeToProduction: "Same day, if no review gate applies (see uncertain)",
       gate: "None documented for OAuth use. Marketplace listing is optional.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: MARKETPLACE },
     },
     {
@@ -43,6 +45,7 @@ export const notion: Guide = {
       timeToFirstToken: "10-15 minutes",
       timeToProduction: "5-10 business days for listing review",
       gate: "Marketplace listing review",
+      launchDays: 10,
       evidence: { kind: "sourced", url: MARKETPLACE },
     },
   ],

@@ -14,6 +14,7 @@ export const gmail: Guide = {
   slug: "gmail",
   name: "Gmail",
   website: "https://mail.google.com",
+  domain: "gmail.com",
   category: "Email",
   consoleUrl: "https://console.cloud.google.com/auth/overview",
   origin: "library",
@@ -36,6 +37,7 @@ export const gmail: Guide = {
       timeToFirstToken: "About 10 minutes",
       timeToProduction: "Minutes to 3 business days (brand verification)",
       gate: "Brand verification: verified domain, homepage and privacy policy.",
+      launchDays: 2,
       evidence: { kind: "tested", note: "Google's console lists gmail.labels as non-sensitive (2026-10-26)." },
     },
     {
@@ -47,6 +49,7 @@ export const gmail: Guide = {
       timeToFirstToken: "About 10 minutes",
       timeToProduction: "About 3-5 business days after you submit",
       gate: "Sensitive-scope verification: justification and demo video. No security audit.",
+      launchDays: 5,
       evidence: { kind: "tested", note: "Console lists gmail.send as sensitive; Google states 3-5 business days.", url: SENSITIVE },
     },
     {
@@ -58,6 +61,7 @@ export const gmail: Guide = {
       timeToFirstToken: "About 10 minutes (test users only)",
       timeToProduction: "Several weeks (often 3-8), then yearly renewal",
       gate: "Restricted-scope verification plus a CASA security assessment paid to a third-party lab (roughly $500-$4,500 a year).",
+      launchDays: 42,
       evidence: {
         kind: "tested",
         note: "Console lists readonly, modify, metadata and full access as restricted. Durations and cost are sourced: Google says 'several weeks'; the cost range is from Google's Health API page and vendor quotes.",

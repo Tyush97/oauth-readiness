@@ -14,6 +14,7 @@ export const slack: Guide = {
   slug: "slack",
   name: "Slack",
   website: "https://slack.com",
+  domain: "slack.com",
   category: "Messaging",
   consoleUrl: "https://api.slack.com/apps",
   origin: "library",
@@ -36,6 +37,7 @@ export const slack: Guide = {
       timeToFirstToken: "5-20 minutes (5 with a manifest)",
       timeToProduction: "Same day: activate public distribution",
       gate: "Distribution checklist (HTTPS everywhere). No review for unlisted apps.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: DISTRIBUTION },
     },
     {
@@ -47,6 +49,7 @@ export const slack: Guide = {
       timeToFirstToken: "5-20 minutes in your own workspace",
       timeToProduction: "Months: reach 10 active workspaces, then up to 10 business days + up to 10 weeks of review",
       gate: "Slack Marketplace approval. Without it, history reads are limited to 1 request per minute.",
+      launchDays: 90,
       evidence: { kind: "sourced", url: REVIEW },
     },
   ],

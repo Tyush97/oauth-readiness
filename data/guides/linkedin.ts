@@ -11,6 +11,7 @@ export const linkedin: Guide = {
   slug: "linkedin",
   name: "LinkedIn",
   website: "https://www.linkedin.com",
+  domain: "linkedin.com",
   category: "Social",
   consoleUrl: "https://www.linkedin.com/developers/apps",
   origin: "library",
@@ -32,6 +33,7 @@ export const linkedin: Guide = {
       timeToFirstToken: "Under 1 hour",
       timeToProduction: "Same day",
       gate: "None. Open products are self-serve.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: GETTING_ACCESS },
     },
     {
@@ -43,6 +45,7 @@ export const linkedin: Guide = {
       timeToFirstToken: "Days to weeks (Development tier vetting)",
       timeToProduction: "Weeks to months, case by case",
       gate: "Partner vetting: registered legal entity, business email, Page super-admin verification",
+      launchDays: null,
       evidence: { kind: "sourced", url: CM_REVIEW },
     },
   ],

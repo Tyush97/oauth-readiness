@@ -64,7 +64,7 @@ JSON SHAPE
 {
  "name": string, "website": string, "category": string, "consoleUrl": string,
  "summary": string,
- "paths": [{ "id": kebab-case string, "label": string, "useCase": string, "scopes": [string], "difficulty": 1-5, "timeToFirstToken": string, "timeToProduction": string, "gate": string, "evidence": Evidence }],
+ "paths": [{ "id": kebab-case string, "label": string, "useCase": string, "scopes": [string], "difficulty": 1-5, "timeToFirstToken": string, "timeToProduction": string, "gate": string, "launchDays": number of days from a working app to "any user can connect" (0 = same day) or null if gated with no timeline, "evidence": Evidence }],
  "steps": [{ "title": string, "detail": string, "who": "agent"|"you"|"both", "phase": string, "paths"?: [string], "evidence": Evidence }],
  "gotchas": [{ "title": string, "detail": string, "fix"?: string, "evidence": Evidence }],
  "agentCan": [string], "youMust": [string], "uncertain": [string]
@@ -230,6 +230,7 @@ export async function* runAgent(query: string): AsyncGenerator<AgentEvent> {
     slug: slugify(String(d.name || app)),
     name: String(d.name || app),
     website: d.website,
+    domain: appDomainFrom(String(d.website || "")) ?? domain,
     category: String(d.category || "App"),
     consoleUrl: d.consoleUrl,
     origin: "generated" as const,
@@ -245,6 +246,7 @@ export async function* runAgent(query: string): AsyncGenerator<AgentEvent> {
       timeToFirstToken: String(p.timeToFirstToken || "Not documented"),
       timeToProduction: String(p.timeToProduction || "Not documented"),
       gate: String(p.gate || "Not documented"),
+      launchDays: p.launchDays === null ? null : Number.isFinite(Number(p.launchDays)) ? Math.max(0, Number(p.launchDays)) : undefined,
       evidence: enforceEvidence(p.evidence, allowed, counter),
     })),
     steps: (d.steps ?? []).map((s) => ({

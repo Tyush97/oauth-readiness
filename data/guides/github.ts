@@ -12,6 +12,7 @@ export const github: Guide = {
   slug: "github",
   name: "GitHub",
   website: "https://github.com",
+  domain: "github.com",
   category: "Developer tools",
   consoleUrl: "https://github.com/settings/applications/new",
   origin: "library",
@@ -33,6 +34,7 @@ export const github: Guide = {
       timeToFirstToken: "About 1 minute to create, 5-10 minutes to a token",
       timeToProduction: "Same day. No review exists.",
       gate: "None from GitHub. Each customer org may need an owner to approve the app.",
+      launchDays: 0,
       evidence: { kind: "tested", note: "Created on 2026-10-26 in about 20 seconds of form filling; no review step appeared." },
     },
     {
@@ -44,6 +46,7 @@ export const github: Guide = {
       timeToFirstToken: "15-30 minutes (private key, permissions, install)",
       timeToProduction: "Same day. Set installable on 'Any account'.",
       gate: "None from GitHub. Installers choose repos; org owners install or approve.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: GITHUB_APPS },
     },
   ],

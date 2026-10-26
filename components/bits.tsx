@@ -1,64 +1,90 @@
-import type { Evidence, Who } from "@/lib/schema";
+import { CheckCircle, BookOpen, Question, Robot, User, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import type { Evidence, Path, Who } from "@/lib/schema";
 import { DIFFICULTY_LABELS } from "@/lib/schema";
 
-const EVIDENCE_TEXT = { tested: "Tested", sourced: "Sourced", uncertain: "Uncertain" } as const;
+/** Plain-language evidence labels. Internally: tested / sourced / uncertain. */
+export const EVIDENCE = {
+  tested: { label: "Verified", long: "We did this ourselves in the provider's console", Icon: CheckCircle },
+  sourced: { label: "From docs", long: "Stated in the linked documentation", Icon: BookOpen },
+  uncertain: { label: "Unconfirmed", long: "Sources conflict or we couldn't confirm it", Icon: Question },
+} as const;
 
-export function EvidenceChip({ evidence }: { evidence: Evidence }) {
-  const label = EVIDENCE_TEXT[evidence.kind] + (evidence.kind === "sourced" && evidence.unofficial ? " (unofficial)" : "");
-  const title = [evidence.note, evidence.url].filter(Boolean).join("\n");
-  const cls = `chip chip-${evidence.kind}`;
-  if (evidence.url) {
-    return (
-      <a className={cls} href={evidence.url} target="_blank" rel="noreferrer" title={title || undefined}>
-        {label} ↗
-      </a>
-    );
-  }
-  return (
-    <span className={cls} title={title || undefined}>
-      {label}
+export function EvidenceTag({ evidence, compact }: { evidence: Evidence; compact?: boolean }) {
+  const e = EVIDENCE[evidence.kind];
+  const label = e.label + (evidence.kind === "sourced" && evidence.unofficial ? " (unofficial)" : "");
+  const title = [e.long, evidence.note, evidence.url].filter(Boolean).join("\n");
+  const body = (
+    <>
+      <e.Icon size={14} weight="bold" aria-hidden="true" />
+      {!compact && label}
+    </>
+  );
+  const cls = `ev ev-${evidence.kind}`;
+  return evidence.url ? (
+    <a className={cls} href={evidence.url} target="_blank" rel="noreferrer" title={title} aria-label={`${label}: open source`}>
+      {body}
+    </a>
+  ) : (
+    <span className={cls} title={title} aria-label={label}>
+      {body}
     </span>
   );
 }
 
-const WHO_TEXT: Record<Who, string> = { agent: "Agent can do", you: "You", both: "Agent drafts, you do" };
+const WHO = {
+  agent: { label: "Agent can do this", Icon: Robot },
+  you: { label: "You do this", Icon: User },
+  both: { label: "Agent prepares, you finish", Icon: UsersThree },
+} as const;
 
-export function WhoChip({ who }: { who: Who }) {
-  return <span className={`chip chip-${who}`}>{WHO_TEXT[who]}</span>;
+export function WhoIcon({ who }: { who: Who }) {
+  const w = WHO[who];
+  return (
+    <span className={`who who-${who}`} title={w.label} aria-label={w.label}>
+      <w.Icon size={17} weight="duotone" />
+    </span>
+  );
 }
 
 export function DifficultyMeter({ value }: { value: number }) {
-  const color = `var(--d${value})`;
   return (
-    <span className="meter" aria-label={`Difficulty ${value} of 5: ${DIFFICULTY_LABELS[value]?.label}`}>
+    <span className="meter" aria-label={`Difficulty ${value} of 5`}>
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={i <= value ? { background: color } : undefined} />
+        <span key={i} style={i <= value ? { background: `var(--d${value})` } : undefined} />
       ))}
     </span>
   );
 }
 
-export function DifficultyTag({ value }: { value: number }) {
+export function DifficultyTag({ value, label }: { value: number; label?: string }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600 }}>
       <DifficultyMeter value={value} />
-      <span style={{ color: `var(--d${value})` }}>{DIFFICULTY_LABELS[value]?.label}</span>
+      <span style={{ color: `var(--d${value})` }}>{label ?? DIFFICULTY_LABELS[value]?.label}</span>
     </span>
   );
 }
 
+/** Short "time to launch" phrase for a path, from its numeric estimate. */
+export function launchLabel(p: Pick<Path, "launchDays">): string {
+  const d = p.launchDays;
+  if (d === null) return "No set timeline";
+  if (d === undefined) return "";
+  if (d <= 0) return "Same day";
+  if (d < 7) return `~${d} days`;
+  if (d < 56) return `~${Math.max(1, Math.round(d / 7))} week${Math.round(d / 7) > 1 ? "s" : ""}`;
+  return `~${Math.round(d / 30)} month${Math.round(d / 30) > 1 ? "s" : ""}`;
+}
+
 export function EvidenceLegend() {
   return (
-    <div className="legend">
-      <span>
-        <span className="chip chip-tested">Tested</span> we did it in the provider console
-      </span>
-      <span>
-        <span className="chip chip-sourced">Sourced</span> a linked doc says so
-      </span>
-      <span>
-        <span className="chip chip-uncertain">Uncertain</span> conflicting or unconfirmed
-      </span>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 16px", fontSize: 13, color: "var(--muted)", alignItems: "center" }}>
+      {(Object.keys(EVIDENCE) as (keyof typeof EVIDENCE)[]).map((k) => (
+        <span key={k} style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+          <EvidenceTag evidence={{ kind: k }} />
+          <span>{EVIDENCE[k].long.toLowerCase()}</span>
+        </span>
+      ))}
     </div>
   );
 }

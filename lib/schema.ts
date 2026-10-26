@@ -42,6 +42,8 @@ export const Path = z.object({
   timeToProduction: z.string(),
   /** the review or gate between "my test users" and "anyone" */
   gate: z.string(),
+  /** rough days from a working app to "any user can connect"; null = gated with no timeline. Drives the comparison chart. */
+  launchDays: z.number().nullable().optional(),
   evidence: Evidence,
 });
 export type Path = z.infer<typeof Path>;
@@ -78,6 +80,8 @@ export const Guide = z.object({
   slug: z.string(),
   name: z.string(),
   website: z.string().optional(),
+  /** domain used to fetch the logo */
+  domain: z.string().optional(),
   category: z.string(),
   consoleUrl: z.string().optional(),
   origin: z.enum(["library", "generated"]),

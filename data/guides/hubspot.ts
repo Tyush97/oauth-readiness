@@ -12,6 +12,7 @@ export const hubspot: Guide = {
   slug: "hubspot",
   name: "HubSpot",
   website: "https://www.hubspot.com",
+  domain: "hubspot.com",
   category: "CRM",
   consoleUrl: "https://developers.hubspot.com",
   origin: "library",
@@ -33,6 +34,7 @@ export const hubspot: Guide = {
       timeToFirstToken: "Under 1 hour with a developer test account",
       timeToProduction: "Same day, capped at 25 installs",
       gate: "Install cap. No review.",
+      launchDays: 0,
       evidence: { kind: "sourced", url: MANAGE },
     },
     {
@@ -44,6 +46,7 @@ export const hubspot: Guide = {
       timeToFirstToken: "Under 1 hour",
       timeToProduction: "Initial review within 10 business days; up to 60 days overall",
       gate: "Marketplace listing: 3 active unaffiliated installs, demo video, every scope used",
+      launchDays: 30,
       evidence: { kind: "sourced", url: LISTING },
     },
   ],

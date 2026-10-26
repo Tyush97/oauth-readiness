@@ -57,3 +57,10 @@ export async function lookupComposio(appName: string): Promise<ComposioLookup> {
   if (b) return { status: "byo", match: b, related };
   return { status: "not-listed" };
 }
+
+/** All OAuth toolkits Composio lists, for search suggestions. Empty if the docs can't be reached. */
+export async function listToolkits(): Promise<{ name: string; managed: boolean }[]> {
+  const t = await getTables();
+  if (!t) return [];
+  return [...t.managed.map((e) => ({ name: e.name, managed: true })), ...t.byo.map((e) => ({ name: e.name, managed: false }))];
+}

@@ -30,10 +30,10 @@ const LIVE_CHECKS: { app: string; claim: string; result: "confirmed" | "correcte
 ];
 
 const RESULT_CHIP = {
-  confirmed: "chip chip-tested",
+  confirmed: "chip chip-ok",
   corrected: "chip chip-you",
   new: "chip chip-agent",
-  unverified: "chip chip-uncertain",
+  unverified: "chip chip-warn",
 } as const;
 
 export default function Method() {
