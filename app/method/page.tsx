@@ -19,6 +19,16 @@ const CHECKS: { claim: string; source: string; result: "confirmed" | "corrected"
   { claim: "Google CASA costs $500-$4,500 a year", source: "Google Health API page + vendors", result: "unverified", detail: "Google's number is for a different API; applied to Gmail by analogy and flagged." },
 ];
 
+const LIVE_CHECKS: { app: string; claim: string; result: "confirmed" | "corrected"; detail: string; url: string }[] = [
+  { app: "Zoom", claim: "Authorization URL approval takes 72 hours", result: "confirmed", detail: "Zoom: '72hrs - once all requirements have been met'.", url: "https://developers.zoom.us/docs/distribute/app-submission/authorization-url-faq.md" },
+  { app: "Zoom", claim: "Beta apps hit a maximum number of test installs; authorization URLs expire", result: "confirmed", detail: "Both errors are documented with renewal steps.", url: "https://developers.zoom.us/docs/distribute/app-submission/authorization-url-faq.md" },
+  { app: "Calendly", claim: "Developer account is separate from your Calendly account", result: "confirmed", detail: "'This is not your Calendly user account.'", url: "https://developer.calendly.com/docs/authentication/creating-an-oauth-app.md" },
+  { app: "Calendly", claim: "Sandbox allows http://localhost; Production needs HTTPS", result: "confirmed", detail: "Stated per environment.", url: "https://developer.calendly.com/docs/authentication/creating-an-oauth-app.md" },
+  { app: "Calendly", claim: "Client secret is shown once", result: "confirmed", detail: "'you will not be able to access the Client Secret or Webhook signing key again'.", url: "https://developer.calendly.com/docs/authentication/creating-an-oauth-app.md" },
+  { app: "Calendly", claim: "Access tokens last 2 hours; 8 tokens per user per minute", result: "confirmed", detail: "Both on the token endpoint page.", url: "https://developer.calendly.com/api-docs/calendly-o-auth/o-auth/post-oauth-refresh-token.md" },
+  { app: "Calendly", claim: "You must implement PKCE", result: "corrected", detail: "Calendly recommends PKCE but doesn't enforce it for web apps; code-level steps are now excluded from guides since Composio handles the flow.", url: "https://developer.calendly.com/docs/authentication/creating-an-oauth-app.md" },
+];
+
 const RESULT_CHIP = {
   confirmed: "chip chip-tested",
   corrected: "chip chip-you",
@@ -69,14 +79,32 @@ export default function Method() {
         <h2>Live guides for any other app</h2>
         <ol className="list">
           <li><strong>Composio check (code, not the model).</strong> We read Composio&apos;s managed OAuth list and look the app up, so &ldquo;can I prototype today?&rdquo; is answered from the source.</li>
-          <li><strong>Two web searches in parallel.</strong> One on setup (console, redirect rules, scopes, tokens), one on approval (review, limits, durations, developer complaints).</li>
-          <li><strong>Every cited page is opened.</strong> Search results that don&apos;t load are dropped and listed.</li>
+          <li><strong>Find the docs.</strong> The agent checks the provider&apos;s developer site for an <code>llms.txt</code> docs index; if there isn&apos;t one, the model suggests where the docs live and the agent checks.</li>
+          <li><strong>Read the right pages.</strong> It opens the pages about creating an app, scopes, review, publishing and rate limits, and follows relevant links one level deep (up to 8 pages). Pages that don&apos;t load are dropped and listed.</li>
           <li><strong>The guide is written against a fixed schema.</strong> Paths, steps, who does each step, blockers, and evidence per claim.</li>
           <li><strong>Evidence rules are enforced in code.</strong> A generated guide can never say &ldquo;Tested&rdquo;. A claim citing a URL we didn&apos;t open is downgraded to Uncertain, and the guide says how many were downgraded.</li>
           <li><strong>Sharing needs no database.</strong> The whole guide is compressed into the link, validated again when opened.</li>
         </ol>
+        <h3 style={{ marginTop: 20, marginBottom: 8 }}>Spot checks of live guides (2026-10-26)</h3>
+        <div className="table-wrap panel" style={{ padding: 6 }}>
+          <table className="simple">
+            <thead>
+              <tr><th>App</th><th>Agent&apos;s claim</th><th>Result</th><th>Source check</th></tr>
+            </thead>
+            <tbody>
+              {LIVE_CHECKS.map((c) => (
+                <tr key={c.claim}>
+                  <td>{c.app}</td>
+                  <td>{c.claim}</td>
+                  <td><span className={RESULT_CHIP[c.result]}>{c.result}</span></td>
+                  <td className="muted"><a href={c.url} target="_blank" rel="noreferrer">{c.detail}</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <p className="muted" style={{ marginTop: 12, fontSize: 14 }}>
-          Live guides use a free-tier model with Google Search grounding, so they&apos;re a strong first draft, not a substitute for a tested guide. <Link href="/">Try one</Link>.
+          Live guides read official docs only and use a free-tier model, so they&apos;re a strong first draft, not a substitute for a tested guide. They miss real-world review times that only show up in developer forums. <Link href="/">Try one</Link>.
         </p>
       </section>
     </>

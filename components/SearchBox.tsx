@@ -35,7 +35,7 @@ export default function SearchBox({ librarySlugs }: { librarySlugs: string[] }) 
         />
         <button className="btn" type="submit">Get guide</button>
       </div>
-      {error ? <div className="error">{error}</div> : <div className="faint">In the library: instant. Anything else: an agent researches it live in about a minute.</div>}
+      {error ? <div className="error">{error}</div> : <div className="faint">In the library: instant. Anything else: an agent reads the provider&apos;s docs live (1-2 minutes).</div>}
     </form>
   );
 }

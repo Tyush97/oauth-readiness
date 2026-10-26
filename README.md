@@ -5,7 +5,7 @@
 Before an agent's users can connect Gmail, Slack or LinkedIn under the developer's own name, the developer needs a provider OAuth app, and some providers make them wait for review. This tool tells a developer, per app: how hard it is, how long until a first token versus until any user can connect, what blocks approval, and which steps an agent can do for them.
 
 - **Library:** 7 checked guides (GitHub, Gmail, Slack, Notion, HubSpot, LinkedIn, Instagram), two of them tested in real provider consoles.
-- **Live generation:** type any app name or website and an agent researches it and writes a shareable guide in about a minute.
+- **Live generation:** type any app name or website and an agent reads that provider's developer docs and writes a shareable guide in 1-2 minutes.
 
 ## What I learned, and the decisions it led to
 
@@ -19,9 +19,9 @@ Before an agent's users can connect Gmail, Slack or LinkedIn under the developer
 
 1. Library match? Return the checked guide.
 2. Look the app up in Composio's managed OAuth list (`docs.composio.dev/toolkits/managed-auth.md`).
-3. Two Gemini calls with Google Search grounding in parallel: setup (console, redirect rules, scopes, tokens) and approval (review, limits, durations, developer complaints).
-4. Resolve and **open every cited page**; unreachable ones are dropped.
-5. A third call writes the guide as JSON against a fixed schema (`lib/schema.ts`).
+3. **Find the official docs.** Probe `developer.` / `developers.` / `docs.` hosts for an `llms.txt` docs index (common on developer sites in 2026). If none is found, a model call suggests where the docs live and the agent checks those.
+4. **Read the pages that matter.** Score index entries and links for OAuth, scopes, review, publishing and rate limits; open up to 8 pages (JavaScript-rendered pages go through a reader service), following relevant links one level deep.
+5. A model call writes the guide as JSON against a fixed schema (`lib/schema.ts`), citing only the pages that were read.
 6. **Evidence rules enforced in code:** a generated guide can never claim "Tested"; any "Sourced" claim citing a URL we didn't open is downgraded to "Uncertain", and the guide reports how many.
 7. Probe the developer console URL (does it exist, does it require sign-in).
 8. Stream progress to the page (NDJSON). The finished guide is compressed into the share link (`/shared#g=...`), so sharing needs no database and the guide never touches our server.
@@ -48,7 +48,9 @@ npm run dev
 
 ## Limitations
 
-- **Live guides are drafts.** They're researched, not tested, and use a free-tier model. They say so on the page.
+- **Live guides are drafts.** They're read from official docs, not tested, and use a free-tier model. They say so on the page.
+- **Why not web search?** Gemini's Google Search grounding has no free quota on new keys (tested 2026-10-26: every model returned 429 with search on, 200 without). Reading the provider's own docs turned out better anyway: every citation is a page the agent actually read. The cost is no forum anecdotes, so real-world review times can be longer than documented.
+- **Speed.** About 1-2 minutes per live guide on the free tier; progress streams so the wait is visible.
 - **Free-tier quota.** Heavy use returns a "quota used up" message; there's a best-effort per-IP limit.
 - **Library freshness.** Checked on 2026-10-26. Provider rules change (GitHub's redirect rules changed in August 2026, HubSpot's listing rules change on 2026-11-02).
 - **Not covered yet:** the 100-app library, re-checking guides on a schedule, and having the agent actually create apps (e.g. Slack's `apps.manifest.create`, which needs a one-time token from the developer). These are the next steps I'd take.

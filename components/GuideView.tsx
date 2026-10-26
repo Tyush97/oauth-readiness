@@ -56,7 +56,7 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
 
       {guide.origin === "generated" && (
         <div className="banner banner-generated section" style={{ marginTop: 20 }}>
-          An agent wrote this guide a moment ago from public web sources. Nothing here was tried in a real console. Every claim links to the source it came from, and any claim whose source couldn&apos;t be confirmed is marked Uncertain.
+          An agent wrote this guide a moment ago by reading the provider&apos;s official docs. Nothing here was tried in a real console. Each claim links to the page it came from, and claims without a page the agent actually read are marked Uncertain.
         </div>
       )}
 

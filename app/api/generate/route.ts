@@ -2,7 +2,7 @@ import { runAgent, type AgentEvent } from "@/lib/agent/pipeline";
 import { runMock } from "@/lib/agent/mock";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 300;
 
 // Best-effort abuse guard for a public demo on a free model quota. Per instance, not global.
 const hits = new Map<string, number[]>();
