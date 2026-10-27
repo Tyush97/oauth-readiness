@@ -38,12 +38,12 @@ const RESULT_CHIP = {
 
 export default function Method() {
   return (
-    <>
+    <article className="narrow page">
       <h1>How we check</h1>
       <p className="lede">
         OAuth setup docs go stale quietly, and a wrong &ldquo;this takes a day&rdquo; can cost a team weeks. So every claim in a guide carries a label, and we tell you what we couldn&apos;t confirm.
       </p>
-      <div className="section"><EvidenceLegend /></div>
+      <div style={{ marginTop: 24 }}><EvidenceLegend /></div>
 
       <section className="section">
         <h2>Library guides</h2>
@@ -56,7 +56,7 @@ export default function Method() {
 
       <section className="section">
         <h2>What we checked, corrected and couldn&apos;t verify</h2>
-        <div className="table-wrap panel" style={{ padding: 6 }}>
+        <div className="table-wrap panel" style={{ padding: 8 }}>
           <table className="simple">
             <thead>
               <tr><th>Claim</th><th>From</th><th>Result</th><th>What we saw</th></tr>
@@ -85,8 +85,8 @@ export default function Method() {
           <li><strong>Evidence rules are enforced in code.</strong> A generated guide can never say &ldquo;Tested&rdquo;. A claim citing a URL we didn&apos;t open is downgraded to Uncertain, and the guide says how many were downgraded.</li>
           <li><strong>Sharing needs no database.</strong> The whole guide is compressed into the link, validated again when opened.</li>
         </ol>
-        <h3 style={{ marginTop: 20, marginBottom: 8 }}>Spot checks of live guides (2026-10-26)</h3>
-        <div className="table-wrap panel" style={{ padding: 6 }}>
+        <h3 style={{ marginTop: 32, marginBottom: 12 }}>Spot checks of live guides (2026-10-26)</h3>
+        <div className="table-wrap panel" style={{ padding: 8 }}>
           <table className="simple">
             <thead>
               <tr><th>App</th><th>Agent&apos;s claim</th><th>Result</th><th>Source check</th></tr>
@@ -107,6 +107,6 @@ export default function Method() {
           Live guides read official docs only and use a free-tier model, so they&apos;re a strong first draft, not a substitute for a tested guide. They miss real-world review times that only show up in developer forums. <Link href="/">Try one</Link>.
         </p>
       </section>
-    </>
+    </article>
   );
 }

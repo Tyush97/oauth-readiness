@@ -57,19 +57,17 @@ export default async function Home() {
                 <div className="card-head">
                   <Logo domain={g.domain} name={g.name} size={40} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="name">{g.name}</div>
+                    <div className="name" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      {g.name}
+                      {g.tested && <CheckCircle size={16} weight="fill" color="var(--ok)" aria-label="Setup verified by us" />}
+                    </div>
                     <div className="faint">{g.category}</div>
                   </div>
-                  {g.tested && (
-                    <span className="chip chip-ok" title="We set this app up ourselves">
-                      <CheckCircle size={13} weight="bold" aria-hidden="true" /> Verified
-                    </span>
-                  )}
                 </div>
                 <p className="tagline">{g.summary.split(". ")[0]}.</p>
-                <div className="card-foot" style={{ flexDirection: "column", alignItems: "stretch", gap: 6 }}>
+                <div className="card-foot" style={{ flexDirection: "column", alignItems: "stretch", gap: 8 }}>
                   {[fast, ...(slow.id !== fast.id ? [slow] : [])].map((p) => (
-                    <div key={p.id} style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
+                    <div key={p.id} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                       <span className="muted" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</span>
                       <span style={{ fontWeight: 600, whiteSpace: "nowrap", color: `var(--d${p.difficulty})` }}>{launchLabel(p)}</span>
                     </div>

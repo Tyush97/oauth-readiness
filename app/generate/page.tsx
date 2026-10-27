@@ -88,8 +88,8 @@ function Generate() {
   const working = !guide && !done;
   return (
     <>
-      <details open={!guide} className="section" style={{ marginTop: 0, marginBottom: 28 }}>
-        <summary style={{ cursor: "pointer", fontWeight: 600, marginBottom: 10 }}>
+      <details open={!guide} className="section" style={{ marginTop: 40, marginBottom: 32 }}>
+        <summary style={{ cursor: "pointer", fontWeight: 600, marginBottom: 12 }}>
           {guide
             ? `Agent run: ${stats?.sources ?? 0} sources opened, ${stats?.downgraded ?? 0} claims downgraded, ${stats?.seconds ?? 0}s`
             : `Researching "${q}"`}

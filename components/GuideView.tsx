@@ -77,22 +77,20 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
       </header>
 
       {guide.origin === "generated" && (
-        <div className="callout callout-warn" style={{ marginTop: 20 }}>
+        <div className="callout callout-warn" style={{ marginTop: 24 }}>
           <Info size={18} aria-hidden="true" style={{ flex: "none", marginTop: 1 }} />
           <span>An agent wrote this from {guide.sources.length} official doc pages it just read. Nothing was tried in a real console, so treat it as a strong first draft.</span>
         </div>
       )}
 
-      <section className="section" style={{ marginTop: 36 }}>
-        <h2 style={{ marginBottom: 6 }}>What does your agent need to do?</h2>
-        <p className="faint" style={{ marginBottom: 14 }}>The permissions you ask for decide how much review you face.</p>
+      <section className="section" style={{ marginTop: 40 }}>
+        <h2 style={{ marginBottom: 4 }}>What does your agent need to do?</h2>
+        <p className="faint" style={{ marginBottom: 16 }}>The permissions you ask for decide how much review you face.</p>
         <div className="paths" role="radiogroup" aria-label="Use case">
           {guide.paths.map((p) => (
             <button key={p.id} className="path" role="radio" aria-checked={p.id === path.id} onClick={() => setPathId(p.id)}>
-              <span className="label">
-                <span>{p.label}</span>
-                <DifficultyTag value={p.difficulty} label={launchLabel(p) || undefined} />
-              </span>
+              <span className="label">{p.label}</span>
+              <DifficultyTag value={p.difficulty} label={launchLabel(p) || undefined} />
               <span className="use"><Rich text={p.useCase} /></span>
             </button>
           ))}
@@ -142,10 +140,10 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
       <section className="section">
         <div className="section-head" style={{ marginBottom: 0 }}>
           <h2>Steps</h2>
-          <span style={{ display: "flex", gap: 14, fontSize: 13, color: "var(--muted)", flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}><WhoIcon who="agent" /> Agent</span>
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}><WhoIcon who="both" /> Agent prepares, you finish</span>
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}><WhoIcon who="you" /> You</span>
+          <span style={{ display: "flex", gap: "8px 16px", fontSize: 13, color: "var(--muted)", flexWrap: "wrap", alignItems: "center" }}>
+            <span style={{ display: "inline-flex", gap: 8, alignItems: "center" }}><WhoIcon who="agent" /> Agent</span>
+            <span style={{ display: "inline-flex", gap: 8, alignItems: "center" }}><WhoIcon who="both" /> Agent prepares, you finish</span>
+            <span style={{ display: "inline-flex", gap: 8, alignItems: "center" }}><WhoIcon who="you" /> You</span>
           </span>
         </div>
         {PHASES.map((ph) => {
@@ -178,7 +176,7 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
       </section>
 
       <section className="section">
-        <h2 style={{ marginBottom: 14 }}>Where developers get stuck</h2>
+        <h2 style={{ marginBottom: 16 }}>Where developers get stuck</h2>
         <div className="blockers">
           {guide.gotchas.map((g) => (
             <div className="blocker" key={g.title}>
@@ -227,11 +225,11 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
           <div>
             {guide.uncertain.length > 0 && (
               <>
-                <h3 style={{ margin: "4px 0 6px" }}>Not verified</h3>
+                <h3 style={{ margin: "0 0 8px" }}>Not verified</h3>
                 <ul className="list">{guide.uncertain.map((u) => <li key={u}><Rich text={u} /></li>)}</ul>
               </>
             )}
-            <h3 style={{ margin: "16px 0 6px" }}>Sources</h3>
+            <h3 style={{ margin: "20px 0 8px" }}>Sources</h3>
             <ul className="list">
               {guide.sources.map((s) => (
                 <li key={s.url}>

@@ -80,7 +80,7 @@ export function EvidenceLegend() {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 16px", fontSize: 13, color: "var(--muted)", alignItems: "center" }}>
       {(Object.keys(EVIDENCE) as (keyof typeof EVIDENCE)[]).map((k) => (
-        <span key={k} style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+        <span key={k} style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
           <EvidenceTag evidence={{ kind: k }} />
           <span>{EVIDENCE[k].long.toLowerCase()}</span>
         </span>
