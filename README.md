@@ -15,6 +15,24 @@ Before an agent's users can connect Gmail, Slack or LinkedIn under the developer
 4. **OAuth docs go stale quietly,** so evidence is a first-class field. Every claim is **Tested** (we did it in the console), **Sourced** (linked doc) or **Uncertain**. Our own setup attempts corrected two claims and found one undocumented option (see `/method`).
 5. **Start from where Composio users are.** Each guide says whether Composio has a managed app, so the developer knows they can prototype today and only need this when they want their own branding, scopes or quota. For live guides this is read from Composio's docs by code, not guessed by the model.
 
+## Scope: what I built, what I left out, and why
+
+The developer's real question is "how long until I can launch, and what will block me?" I scoped to whatever answers that fastest and most honestly.
+
+**In scope**
+- **7 hand-checked guides, one per difficulty tier** (self-serve, install caps, light review, verification and audit, business review, partner-gated). Breadth across tiers teaches more than depth in one tier.
+- **Use-case paths and two timelines** in every guide, because the scope an agent needs decides the review it faces.
+- **Live guides for any app** that cite only pages the agent actually read, with evidence rules enforced in code.
+- **An agent-prepared setup kit:** prefilled creation links where providers allow them (GitHub's OAuth App form, Slack's app manifest URL) and copy-ready redirect URI and scopes everywhere else.
+- **Composio context:** whether Composio already manages the app, read from Composio's own docs.
+
+**Out of scope, deliberately**
+- **The agent creating apps in a developer's account by itself.** It would need the developer's provider login, which an agent shouldn't hold. It prepares everything and hands over a one-click, reviewable form instead.
+- **Submitting reviews or verifications** (Google CASA, Meta App Review). These need legal identity, payment or recorded demos.
+- **100 library guides.** The live agent plus scheduled re-checks is the path there; hand-writing 100 now would trade honesty for coverage.
+- **Accounts, saved guides and a database.** Share links carry the whole guide, so there's nothing to store.
+- **Paid model capacity.** It runs on a free tier, so live guides take 1-2 minutes.
+
 ## How the live agent works (`lib/agent/pipeline.ts`)
 
 1. Library match? Return the checked guide.
@@ -30,7 +48,7 @@ Before an agent's users can connect Gmail, Slack or LinkedIn under the developer
 
 | Guide | Evidence |
 |---|---|
-| GitHub | Tested on 2026-10-26: created an OAuth App, viewed consent, reproduced the redirect-mismatch error |
+| GitHub | Tested on 2026-10-26: created an OAuth App, viewed consent, reproduced the redirect-mismatch error. Tested on 2026-10-28: the prefilled creation link opens the form with name, homepage and Composio callback filled in |
 | Gmail | Tested on 2026-10-26: project, consent screen, scope classification of 9 scopes, redirect validation, 403 for non-test users, unverified-app warning, consent screen. Stopped before granting access |
 | Slack, Notion, HubSpot, LinkedIn, Instagram | Sourced from official docs (plus labelled forum reports); not tested because they need a workspace, business portfolio, Page or developer account |
 

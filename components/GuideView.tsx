@@ -20,6 +20,7 @@ import type { Guide, Step } from "@/lib/schema";
 import { guideToMarkdown } from "@/lib/markdown";
 import { DifficultyTag, EvidenceTag, Rich, WhoIcon, launchLabel } from "./bits";
 import Logo from "./Logo";
+import SetupKit from "./SetupKit";
 
 const PHASES: { id: Step["phase"]; label: string }[] = [
   { id: "prepare", label: "Before you start" },
@@ -136,6 +137,8 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
           </div>
         </div>
       </section>
+
+      <SetupKit guide={guide} path={path} />
 
       <section className="section">
         <div className="section-head" style={{ marginBottom: 0 }}>
