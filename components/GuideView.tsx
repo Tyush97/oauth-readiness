@@ -67,7 +67,7 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
           <h1 style={{ fontSize: "clamp(28px, 3.6vw, 38px)" }}>{guide.name}</h1>
           <p className="summary"><Rich text={guide.summary} /></p>
           <div className="toolbar">
-            <button className="btn-ghost" onClick={() => copy("link")}><LinkSimple size={15} aria-hidden="true" />{copied === "link" ? "Copied" : "Share link"}</button>
+            <button className="btn-primary" onClick={() => copy("link")}><LinkSimple size={15} aria-hidden="true" />{copied === "link" ? "Copied" : "Share link"}</button>
             <button className="btn-ghost" onClick={() => copy("md")}><MarkdownLogo size={15} aria-hidden="true" />{copied === "md" ? "Copied" : "Copy as Markdown"}</button>
             {guide.consoleUrl && (
               <a className="btn-ghost" href={guide.consoleUrl} target="_blank" rel="noreferrer"><ArrowSquareOut size={15} aria-hidden="true" />Developer console</a>

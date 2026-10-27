@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { Geist, JetBrains_Mono } from "next/font/google";
-import { Gauge } from "@phosphor-icons/react/dist/ssr";
 import ThemeToggle from "@/components/ThemeToggle";
+import Sidebar from "@/components/Sidebar";
+import { LIBRARY } from "@/data/guides";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
@@ -22,24 +23,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script id="theme" strategy="beforeInteractive">{`try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`}</Script>
       </head>
       <body>
-        <header className="header">
-          <div className="container header-inner">
-            <Link href="/" className="brand">
-              <span className="brand-mark"><Gauge size={16} weight="bold" aria-hidden="true" /></span>
-              OAuth Readiness
-            </Link>
-            <div className="header-right">
-              <nav className="nav">
-                <Link href="/#library" className="nav-guides">Guides</Link>
-                <Link href="/method">How we check</Link>
-              </nav>
-              <ThemeToggle />
-            </div>
+        <div className="shell">
+          <Sidebar guides={LIBRARY.map((g) => ({ slug: g.slug, name: g.name, domain: g.domain }))} />
+          <div className="shell-main">
+            <header className="header mobile-only">
+              <div className="container header-inner">
+                <Link href="/" className="brand">
+                  <span className="brand-mark" aria-hidden="true">OR</span>
+                  <span className="badge" style={{ color: "var(--accent)" }}>Readiness</span>
+                </Link>
+                <div className="header-right">
+                  <nav className="nav">
+                    <Link href="/method">How we check</Link>
+                  </nav>
+                  <ThemeToggle />
+                </div>
+              </div>
+            </header>
+            <main>
+              <div className="container">{children}</div>
+            </main>
           </div>
-        </header>
-        <main>
-          <div className="container">{children}</div>
-        </main>
+        </div>
       </body>
     </html>
   );

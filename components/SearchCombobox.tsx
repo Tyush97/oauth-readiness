@@ -49,6 +49,10 @@ export default function SearchCombobox({ library, toolkits }: { library: Library
   const listId = useId();
 
   useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("search")) inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
         e.preventDefault();
