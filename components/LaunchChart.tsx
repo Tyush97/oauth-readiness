@@ -5,12 +5,12 @@ import { launchLabel } from "./bits";
 
 /** Log-ish scale: same day at the left, "gated" pinned to the right edge. */
 const pos = (d: number | null | undefined) => (d === null || d === undefined ? 97 : 3 + (Math.log(1 + d) / Math.log(1 + 120)) * 80);
-const TICKS: { label: string; d: number | null }[] = [
-  { label: "Same day", d: 0 },
-  { label: "1 week", d: 7 },
-  { label: "1 month", d: 30 },
-  { label: "3 months", d: 90 },
-  { label: "Gated", d: null },
+const TICKS: { label: string; short: string; d: number | null }[] = [
+  { label: "Same day", short: "Day 1", d: 0 },
+  { label: "1 week", short: "1w", d: 7 },
+  { label: "1 month", short: "1m", d: 30 },
+  { label: "3 months", short: "3m", d: 90 },
+  { label: "Gated", short: "Gated", d: null },
 ];
 
 const order = (p: Path) => (p.launchDays === null ? 1e9 : p.launchDays ?? 0);
@@ -64,7 +64,8 @@ export default function LaunchChart({ guides }: { guides: Guide[] }) {
         <div className="ticks">
           {TICKS.map((t) => (
             <span key={t.label} style={{ left: `${pos(t.d)}%` }}>
-              {t.label}
+              <span className="tick-long">{t.label}</span>
+              <span className="tick-short">{t.short}</span>
             </span>
           ))}
         </div>
