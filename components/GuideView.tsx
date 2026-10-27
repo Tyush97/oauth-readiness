@@ -181,7 +181,7 @@ export default function GuideView({ guide, shareUrl }: { guide: Guide; shareUrl?
           {guide.gotchas.map((g) => (
             <div className="blocker" key={g.title}>
               <div className="title">
-                <span style={{ display: "flex", gap: 8 }}><Warning size={18} color="var(--d4)" weight="duotone" style={{ flex: "none", marginTop: 1 }} aria-hidden="true" /><Rich text={g.title} /></span>
+                <span style={{ display: "flex", gap: 8 }}><Warning size={18} color="var(--d4)" weight="duotone" style={{ flex: "none", marginTop: 2 }} aria-hidden="true" /><span><Rich text={g.title} /></span></span>
                 <EvidenceTag evidence={g.evidence} compact />
               </div>
               <div className="step-detail" style={{ marginTop: 0 }}><Rich text={g.detail} /></div>

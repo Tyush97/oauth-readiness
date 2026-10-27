@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import { Gauge } from "@phosphor-icons/react/dist/ssr";
 import ThemeToggle from "@/components/ThemeToggle";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: "OAuth Readiness",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} data-theme="light" suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} ${mono.variable}`} data-theme="light" suppressHydrationWarning>
       <head>
         {/* Apply the saved theme before paint so there's no flash. */}
         <Script id="theme" strategy="beforeInteractive">{`try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`}</Script>

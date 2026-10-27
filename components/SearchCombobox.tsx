@@ -141,7 +141,6 @@ export default function SearchCombobox({ library, toolkits }: { library: Library
           onBlur={() => setTimeout(() => setOpen(false), 120)}
           onKeyDown={onKeyDown}
         />
-        <span className="kbd" aria-hidden="true">/</span>
       </div>
       {open && options.length > 0 && (
         <div className="menu" role="listbox" id={listId}>

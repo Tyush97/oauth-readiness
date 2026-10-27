@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { LIBRARY } from "@/data/guides";
 import { launchLabel } from "@/components/bits";
 import Logo from "@/components/Logo";
@@ -44,7 +44,10 @@ export default async function Home() {
 
       <section className="section" id="library">
         <div className="section-head">
-          <h2>Ready guides</h2>
+          <div>
+            <div className="label" style={{ marginBottom: 8 }}>Library</div>
+            <h2>Ready guides</h2>
+          </div>
           <Link href="/method" className="faint">How we check each claim</Link>
         </div>
         <div className="grid">
@@ -53,23 +56,24 @@ export default async function Home() {
             const fast = sorted[0];
             const slow = sorted[sorted.length - 1];
             return (
-              <Link key={g.slug} href={`/guides/${g.slug}`} className="card">
+              <Link key={g.slug} href={`/guides/${g.slug}`} className="card card-list">
                 <div className="card-head">
-                  <Logo domain={g.domain} name={g.name} size={40} />
+                  <Logo domain={g.domain} name={g.name} size={36} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="name" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      {g.name}
-                      {g.tested && <CheckCircle size={16} weight="fill" color="var(--ok)" aria-label="Setup verified by us" />}
+                    <div className="name">{g.name}</div>
+                    <div className="faint" style={{ fontSize: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      {g.category}
+                      {g.tested && <span className="badge" style={{ color: "var(--ok)", fontSize: 9.5, padding: "0 5px" }}>Verified</span>}
                     </div>
-                    <div className="faint">{g.category}</div>
                   </div>
+                  <ArrowUpRight size={16} color="var(--faint)" style={{ alignSelf: "flex-start" }} aria-hidden="true" />
                 </div>
                 <p className="tagline">{g.summary.split(". ")[0]}.</p>
-                <div className="card-foot" style={{ flexDirection: "column", alignItems: "stretch", gap: 8 }}>
+                <div className="card-rows">
                   {[fast, ...(slow.id !== fast.id ? [slow] : [])].map((p) => (
-                    <div key={p.id} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                    <div key={p.id} className="card-row">
                       <span className="muted" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</span>
-                      <span style={{ fontWeight: 600, whiteSpace: "nowrap", color: `var(--d${p.difficulty})` }}>{launchLabel(p)}</span>
+                      <span style={{ fontWeight: 500, whiteSpace: "nowrap", color: `var(--d${p.difficulty})` }}>{launchLabel(p)}</span>
                     </div>
                   ))}
                 </div>
